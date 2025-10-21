@@ -68,6 +68,18 @@ comentario_categoria = {
 df['categoria_del_problema'] = df['comentario'].map(comentario_categoria)
 # print(df)
 
+# ======= se cambia las ciudades a numeros ==================================
+data = {
+    'Ciudad': ['Barranquilla', 'Bogotá', 'Bucaramanga', 'Cali', 'Cartagena', 'Cúcuta', 'Manizales', 'Medellín', 'Pereira', 'Santa Marta'],
+    'cantidad': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+df = pd.DataFrame(data)
+# Crea un diccionario que asigna un número único a cada ciudad
+ciudad_numero = {ciudad: numero for numero, ciudad in enumerate(df['ciudad'].unique(), start=1)}
+# Reemplaza las ciudades por sus números correspondientes
+df['ciudad'] = df['ciudad'].map(ciudad_numero)
+print(df)
+
 # # =================== revisar categorias iguales ======================
 # categorias_contadas = df.groupby('Categoría del problema').size().reset_index(name='cantidad')
 # print(categorias_contadas)
@@ -79,7 +91,7 @@ for index, row in comentarios_por_ciudad_categoria.iterrows():
     ciudad = row['ciudad']
     categoría = row['categoria_del_problema']
     cantidad = row['cantidad']
-    print(f"Ciudad: {ciudad}, Categoría: {categoría}, Cantidad de comentarios: {cantidad}")
+    # print(f"Ciudad: {ciudad}, Categoría: {categoría}, Cantidad de comentarios: {cantidad}")
 # Crear la gráfica de barras
 plt.figure(figsize=(10, 6))
 sns.barplot(
@@ -98,3 +110,5 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 # Mostrar gráfica
 plt.show()
+
+print(df.head())
