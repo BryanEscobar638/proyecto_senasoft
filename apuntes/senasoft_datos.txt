@@ -86,3 +86,7 @@ IDEAS:
 	   - Clasifique el problema reportado.
 	   - Resuma los temas más comunes para enviarlos semanalmente a líderes o autoridades.
 	   - Brinde información educativa o consejos según el tipo de problema (por ejemplo, “cómo potabilizar el agua”, 	     “cómo reportar luminarias dañadas”).
+	4. Una maquina que se ponga en puntos estratégicos donde las personas puedan dirigirse y poner su problema.
+	5. chatbot via sms
+	6. crear una API para crear una APP para las comunidades con internet y que también funcione para hacer un
+	   sitio local donde las personas sin internet puedan dirigirse a poner sus problemáticas

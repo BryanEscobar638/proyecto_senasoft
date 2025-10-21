@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_csv("dataset_comunidades_senasoft.csv")
 
@@ -13,6 +15,11 @@ df = df.dropna(subset=['comentario'])
 
 # # ================= revisar dataframe ======================
 # print(df.head())
+# print(df.isnull().sum())
+
+# =========== Rellenar los valores nulos ========
+df['edad'].fillna(48, inplace=True)
+df['ciudad'].fillna('desconocida', inplace=True)
 # print(df.isnull().sum())
 
 # # =================== revisar edades =========================
@@ -65,9 +72,29 @@ df['categoria_del_problema'] = df['comentario'].map(comentario_categoria)
 # categorias_contadas = df.groupby('Categoría del problema').size().reset_index(name='cantidad')
 # print(categorias_contadas)
 
-# =========== Rellenar los valores nulos ========
-df['edad'].fillna(48, inplace=True)
-df['ciudad'].fillna('desconocida', inplace=True)
-print(df.isnull().sum())
-
-
+# ===== Revisar la cantidad de problemas por categoria en cada ciudad con grafica =========
+comentarios_por_ciudad_categoria = df.groupby(['ciudad', 'categoria_del_problema']).size().reset_index(name='cantidad')
+# Imprime la cantidad de comentarios para cada ciudad y categoría
+for index, row in comentarios_por_ciudad_categoria.iterrows():
+    ciudad = row['ciudad']
+    categoría = row['categoria_del_problema']
+    cantidad = row['cantidad']
+    print(f"Ciudad: {ciudad}, Categoría: {categoría}, Cantidad de comentarios: {cantidad}")
+# Crear la gráfica de barras
+plt.figure(figsize=(10, 6))
+sns.barplot(
+    data=comentarios_por_ciudad_categoria,
+    x='ciudad',
+    y='cantidad',
+    hue='categoria_del_problema'
+)
+# Título y etiquetas
+plt.title('Cantidad de comentarios por ciudad y categoría')
+plt.xlabel('Ciudad')
+plt.ylabel('Cantidad de comentarios')
+# Muestra la leyenda y mejora la estética
+plt.legend(title='Categoría del problema')
+plt.xticks(rotation=45)
+plt.tight_layout()
+# Mostrar gráfica
+plt.show()
