@@ -1,0 +1,72 @@
+datos relevantes: nivel de urgencia, fecha del reporte (los mas antiguos tienen mas peso), atención previa del
+gobierno, zona rural
+
+clasificaciones: zonas, categoría, nivel de urgencia, atención previa del gobierno	
+
+columnas dropeadas: nombre, genero
+
+preguntas:
+	- que relevancia tiene la edad?
+	- de donde viene el dato de urgencia?
+
+edad mínima 15
+edad promedio 48
+edad máxima 80
+
+valores nulos: edad, ciudad, comentarios
+
+recategorizar categorías en base al tipo de comentario
+
+                                      Comentario  cantidad
+0            falta agua potable en varias casas.       901
+1          faltan médicos en el centro de salud.       953
+2    hay problemas con la recolección de basura.       919
+3      la contaminación del río está aumentando.       942
+4            las basuras no se recogen a tiempo.       977
+5     las calles están muy oscuras y peligrosas.       946
+6  necesitamos más acceso a internet en la zona.       963
+7          no hay suficientes escuelas públicas.       928
+8  no tenemos centros culturales ni bibliotecas.       889
+9               queremos más presencia policial.       944
+
+         Ciudad  cantidad
+0  Barranquilla       943
+1        Bogotá      1023
+2   Bucaramanga       985
+3          Cali       967
+4     Cartagena       985
+5        Cúcuta       966
+6     Manizales      1013
+7      Medellín      1010
+8       Pereira       983
+9   Santa Marta       989
+
+  Género  cantidad
+0      F      3226
+1      M      3148
+2   Otro      3165
+
+  Categoría del problema  cantidad
+0              Educación      2509
+1         Medio Ambiente      2436
+2                  Salud      2515
+3              Seguridad      2540
+
+============== RECATEGORIZACIÓN DE COMENTARIO ================
+Comentario                                   	Categoría
+falta agua potable en varias casas.          	Salud  
+faltan médicos en el centro de salud.        	Salud
+hay problemas con la recolección de basura.  	medio ambiente
+la contaminación del río está aumentando.    	medio ambiente
+las basuras no se recogen a tiempo.          	medio ambiente
+las calles están muy oscuras y peligrosas.   	seguridad
+necesitamos más acceso a internet en la zona.   educación
+no hay suficientes escuelas públicas.       	educación
+no tenemos centros culturales ni bibliotecas.   educación
+queremos más presencia policial.       		seguridad
+
+  Categoría del problema  cantidad
+0              Educación      2780
+1         Medio ambiente      2838
+2                  Salud      1854
+3              Seguridad      1890

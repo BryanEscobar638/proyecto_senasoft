@@ -1,0 +1,40 @@
+objetivo:
+promover el uso de IA etica responsable en la resolucion de problemas sociales reales en comunidades colombianas
+
+enfoque:
+busca desarrollar el talento mediante soluciones tecnologicas
+
+apoyo y evaluación:
+ofrece recursos de apoyo y criterios de evaluacion claros para guiar la participación
+
+objetivo del desafio:
+resolver problemas reales en comunidades locales, centrandose en la educacion, salud, medio ambiente y seguridad
+
+tecnicas:
+los equipos aplicaran clasificiacion, resumen de datos, herramientas de IA generativa, y se ceñiran a los principios eticos
+
+colaboracion:
+fomentara el trabajo en equipo y pensamiento critico entre los participantes
+
+escenario de aplicacion:
+
+proyecto que analizara volumenes de informacion de comunidades y apartir de ese analisis proponer una solucion tecnologica a la problematica impulsado por IA
+
+tecnicas de clasificacio de datos:
+usar metodos de clasificacion para categorizar los datos por tipo de problema, urgencia, y ubicacion para un manejo eficaz
+
+aplicaciones y herramientas de IA:
+aprovechar IA generativa para crear informes e interfces conversacionales
+
+metodologias agiles: scrum
+
+entrega al cliente:
+implementar tecnicas de presentacion efectiva para ofrecer el produtto final a un panel de potenciales clientes, de manera persuasiva y argumentada en el analisis de datos
+
+analizar dataset, generar ideas y dudas
+
+15%: innovacion
+40%: uso adecuado y correcto de tecnicas de IA
+20%:  metodologias agiles
+10%: impacto social de la solucion
+15%: presentacion clara y profesionald
