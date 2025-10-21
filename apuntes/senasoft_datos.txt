@@ -70,3 +70,19 @@ queremos más presencia policial.       		seguridad
 1         Medio ambiente      2838
 2                  Salud      1854
 3              Seguridad      1890
+
+IDEAS:
+	1. App simple donde los habitantes puedan enviar reportes o comentarios (texto, voz o formulario) sobre problemas 	  locales.
+	  La IA se encarga de:
+	  - Clasificar automáticamente los reportes (salud, seguridad, medio ambiente, educación).
+	  - Resumir los principales problemas detectados por semana o mes.
+	2. Los ciudadanos reportan problemas indicando su ubicación aproximada y una breve descripción.
+	   La IA:
+	   - Clasifica el tipo de problema (salud, medio ambiente, seguridad o educación).
+	   - Muestra los resultados en un mapa interactivo (por colores o iconos).
+	   - Resume las zonas más críticas o más mencionadas.
+	3. Un asistente virtual (por WhatsApp, Telegram o web) que reciba mensajes de los habitantes y,
+	   usando IA:
+	   - Clasifique el problema reportado.
+	   - Resuma los temas más comunes para enviarlos semanalmente a líderes o autoridades.
+	   - Brinde información educativa o consejos según el tipo de problema (por ejemplo, “cómo potabilizar el agua”, 	     “cómo reportar luminarias dañadas”).
