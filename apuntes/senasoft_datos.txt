@@ -34,7 +34,7 @@ recategorizar categorías en base al tipo de comentario
 1        Bogotá      1023
 2   Bucaramanga       985
 3          Cali       967
-4     Cartagena       985
+4     Cartagena       985	
 5        Cúcuta       966
 6     Manizales      1013
 7      Medellín      1010
@@ -90,3 +90,12 @@ IDEAS:
 	5. chatbot via sms
 	6. crear una API para crear una APP para las comunidades con internet y que también funcione para hacer un
 	   sitio local donde las personas sin internet puedan dirigirse a poner sus problemáticas
+
+Salud mental y suicidio, Enfermedades crónicas no transmisibles, Consumo de sustancias psicoactivas, Enfermedades transmitidas por vectores (dengue, chikungunya, zika), Contaminación ambiental y manejo de basuras
+
+
+creame una infografia en formato 16:9 con respecto a los problemas de salubridad: Salud mental y suicidio, Enfermedades crónicas no transmisibles, Consumo de sustancias psicoactivas y con los textos correctos
+
+
+en base a este codigo generame con fast api que lo pueda consumir con JS tiene que poder recibir estas ciudades: barranquilla, bogota, bucaramanga, cali, cartagena, cucuta, manizales, medellin, pereira, santa marta y estas 4 categorias: educacion, medio ambiente, salud y seguridad. y cuando reciba alguna de estas categorias tire un texto Ej: como esta la seguridad en pereira? respuesta: 60 usuarios reportaron problemas en la seguridad de Pereira
+
