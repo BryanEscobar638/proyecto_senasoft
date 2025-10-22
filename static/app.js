@@ -1,4 +1,4 @@
-document.getElementById("consultar").addEventListener("click", async () => {
+async function enviarMensaje() {
   const input = document.getElementById("mensaje").value.trim();
   const chatBody = document.getElementById("chatBody");
 
@@ -27,7 +27,6 @@ document.getElementById("consultar").addEventListener("click", async () => {
   chatBody.scrollTop = chatBody.scrollHeight;
 
   try {
-    // Llamada al backend que generará la respuesta con Gemini
     const res = await fetch(`/consulta?mensaje=${encodeURIComponent(input)}`);
     if (!res.ok) throw new Error(`Error del servidor (${res.status})`);
     const data = await res.json();
@@ -39,11 +38,7 @@ document.getElementById("consultar").addEventListener("click", async () => {
     const botMsg = document.createElement("div");
     botMsg.classList.add("p-2", "bg-light", "border", "rounded-3", "shadow-sm");
 
-    if (data.gemini) {
-      // Si el backend devuelve la respuesta generada por Gemini
-      botMsg.textContent = data.gemini;
-    } else if (data.mensaje) {
-      // Si solo devuelve mensaje de dataset
+    if (data.mensaje) {
       botMsg.textContent = data.mensaje;
     } else if (data.error) {
       botMsg.classList.replace("bg-light", "bg-warning");
@@ -55,7 +50,6 @@ document.getElementById("consultar").addEventListener("click", async () => {
     botWrapper.appendChild(botMsg);
     chatBody.appendChild(botWrapper);
     chatBody.scrollTop = chatBody.scrollHeight;
-
   } catch (error) {
     console.error("Error en la conexión:", error);
     const errorWrapper = document.createElement("div");
@@ -68,5 +62,16 @@ document.getElementById("consultar").addEventListener("click", async () => {
     errorWrapper.appendChild(errorMsg);
     chatBody.appendChild(errorWrapper);
     chatBody.scrollTop = chatBody.scrollHeight;
+  }
+}
+
+// Click en el botón
+document.getElementById("consultar").addEventListener("click", enviarMensaje);
+
+// Detectar Enter en el input
+document.getElementById("mensaje").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // Evita que haga un salto de línea
+    enviarMensaje();
   }
 });

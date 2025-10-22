@@ -99,3 +99,7 @@ creame una infografia en formato 16:9 con respecto a los problemas de salubridad
 
 en base a este codigo generame con fast api que lo pueda consumir con JS tiene que poder recibir estas ciudades: barranquilla, bogota, bucaramanga, cali, cartagena, cucuta, manizales, medellin, pereira, santa marta y estas 4 categorias: educacion, medio ambiente, salud y seguridad. y cuando reciba alguna de estas categorias tire un texto Ej: como esta la seguridad en pereira? respuesta: 60 usuarios reportaron problemas en la seguridad de Pereira
 
+
+API PRUEBA:
+	id cliente: 1018508563205-mg51enk05furlflctnt8c0adtj2s137s.apps.googleusercontent.com
+	secreto cliente: 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
