@@ -1,0 +1,36 @@
+# Entornos virtuales
+venv/
+.env/
+.venv/
+env/
+
+# Archivos de configuración locales
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Archivos de logs
+*.log
+
+# Archivos de sistema (Windows / macOS / Linux)
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno
+.env.local
+.env.*.local
+
+# Carpeta de Node (si usas npm para algo del frontend)
+node_modules/
+
+# Archivos de compilación
+dist/
+build/
+
+# Archivos de editor
+.vscode/
+.idea/
+*.swp
