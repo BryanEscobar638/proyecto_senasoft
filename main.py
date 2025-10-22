@@ -30,8 +30,8 @@ for col in df.select_dtypes(include=['object']).columns:
 # Limpiar datos
 df = df.drop(columns=["nombre", "genero"], errors="ignore")
 df = df.dropna(subset=['comentario'])
-df['edad'].fillna(48, inplace=True)
-df['ciudad'].fillna('desconocida', inplace=True)
+df['edad'] = df['edad'].fillna(48)
+df['ciudad'] = df['ciudad'].fillna('desconocida')
 
 # Diccionario para detectar palabras clave de categorías
 categoria_palabras = {
@@ -55,6 +55,21 @@ async def home():
 async def consulta(mensaje: str = Query(...)):
     texto = normalizar_texto(mensaje)
     
+    # Diccionario de respuestas rápidas
+    respuestas_rapidas = {
+        "hola": "¡Hola! 👋 ¿Cómo estás?",
+        "buenos dias": "¡Buenos días!",
+        "buenas tardes": "¡Buenas tardes!",
+        "buenas noches": "¡Buenas noches!",
+        "gracias": "¡De nada!",
+        "adios": "¡Hasta luego!"
+    }
+
+    # Revisar si alguna palabra clave rápida está en el mensaje
+    for palabra, respuesta in respuestas_rapidas.items():
+        if palabra in texto:
+            return {"mensaje": respuesta}
+
     # Listas válidas
     ciudades_validas = [normalizar_texto(c) for c in [
         "Barranquilla", "Bogotá", "Bucaramanga", "Cali", "Cartagena",
@@ -65,13 +80,13 @@ async def consulta(mensaje: str = Query(...)):
     # Detectar ciudad
     ciudad = next((c for c in ciudades_validas if c in texto), None)
     if not ciudad:
-        return JSONResponse({"error": "No se detectó ninguna ciudad válida en el mensaje."}, status_code=400)
+        return {"mensaje": "No te entiendo, ¿puedes volverlo a intentar? 🤔"}
 
     # Detectar categoría
     categoria = next((cat for cat in categorias_validas 
                         if any(palabra in texto for palabra in categoria_palabras[cat])), None)
     if not categoria:
-        return JSONResponse({"error": "No se detectó ninguna categoría válida en el mensaje."}, status_code=400)
+        return {"mensaje": "No te entiendo, ¿puedes volverlo a intentar? 🤔"}
 
     # Contar reportes: ciudad exacta y alguna palabra clave de la categoría en comentario
     count = df[
@@ -80,3 +95,4 @@ async def consulta(mensaje: str = Query(...)):
     ].shape[0]
 
     return {"mensaje": f"{count} usuarios reportaron problemas en la {categoria} de {ciudad.capitalize()}."}
+
