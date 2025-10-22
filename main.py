@@ -4,11 +4,15 @@ from fastapi.staticfiles import StaticFiles
 import pandas as pd
 import unicodedata
 import requests
-import json
+import os
 
 # ================== CONFIGURACIÓN ==================
-GEMINI_API_KEY = "AIzaSyDbyg3DgpbQs9rFiSrzvO2tn_FNT2Vbd1U"  # Reemplaza con tu clave real
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")  # Variable de entorno
 GEMINI_MODEL = "gemini-2.5-flash"
+print("GEMINI_API_KEY =", GEMINI_API_KEY)
+
+if not GEMINI_API_KEY:
+    raise ValueError("❌ La variable de entorno GEMINI_API_KEY no está definida")
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -20,7 +24,7 @@ df = pd.read_csv("dataset_comunidades_senasoft.csv")
 df.columns = df.columns.str.lower().str.replace(' ', '_')
 df.columns = df.columns.str.normalize('NFD').str.encode('ascii', errors='ignore').str.decode('utf-8')
 
-# Función para normalizar texto (quita tildes, pasa a minúsculas)
+# Función para normalizar texto
 def normalizar_texto(texto):
     if isinstance(texto, str):
         return ''.join(
@@ -35,9 +39,8 @@ for col in df.select_dtypes(include=['object']).columns:
 
 # Limpiar datos
 df = df.drop(columns=["nombre", "genero"], errors="ignore")
-df = df.dropna(subset=['comentario'])
-df['edad'].fillna(48, inplace=True)
-df['ciudad'].fillna('desconocida', inplace=True)
+df['edad'] = df['edad'].fillna(48)
+df['ciudad'] = df['ciudad'].fillna('desconocida')
 
 # Diccionario de palabras clave por categoría
 categoria_palabras = {
@@ -52,37 +55,35 @@ for cat in categoria_palabras:
     categoria_palabras[cat] = [normalizar_texto(p) for p in categoria_palabras[cat]]
 
 # ================== FUNCIÓN PARA GEMINI ==================
-def generar_respuesta_gemini(task_description: str) -> str:
-    url = f"https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+def generar_respuesta_gemini(prompt: str) -> str:
+    """
+    Llama a la API de Gemini y devuelve el texto generado.
+    """
+    url = f"https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent"
     payload = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {
-                        "text": f"Genera una respuesta en formato de dos líneas.\n"
-                                f"Línea 1: Resume en una frase.\n"
-                                f"Línea 2: Clasificación con una sola palabra: Trabajo, Estudio, Personal, Urgente, Ocio.\n"
-                                f"No uses negritas ni texto adicional. Tarea: {task_description}"
-                    }
-                ]
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.7,
-            "candidateCount": 1,
-            "maxOutputTokens": 1024
-        }
+        "prompt": {
+            "text": f"Usa la información del dataset y genera una respuesta clara sobre: {prompt}"
+        },
+        "temperature": 0.7,
+        "maxOutputTokens": 500
     }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {GEMINI_API_KEY}"
+    }
+
     try:
-        response = requests.post(url, headers={"Content-Type": "application/json"},
-                                 data=json.dumps(payload))
+        response = requests.post(url, json=payload, headers=headers)
         response.raise_for_status()
         data = response.json()
-        texto_generado = data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-        return texto_generado or "⚠️ Sin texto disponible"
-    except requests.RequestException as e:
-        return f"❌ Error generando resumen: {str(e)}"
+        # Acceder al texto generado
+        return data.get("candidates", [{}])[0].get("content", [{}])[0].get("text", "⚠️ Sin respuesta de Gemini")
+    except requests.exceptions.HTTPError as e:
+        print("Error llamando a Gemini:", e)
+        return f"❌ Error HTTP: {e.response.status_code}"
+    except Exception as e:
+        print("Error general llamando a Gemini:", e)
+        return "❌ Error generando respuesta con Gemini"
 
 # ================== ENDPOINTS ==================
 @app.get("/", response_class=HTMLResponse)
@@ -112,6 +113,9 @@ async def consulta(mensaje: str = Query(...)):
     if not categoria:
         return JSONResponse({"error": "No se detectó ninguna categoría válida en el mensaje."}, status_code=400)
 
+    # Asegurar que todos los comentarios sean strings
+    df['comentario'] = df['comentario'].astype(str)
+
     # Contar reportes en dataset
     count = df[
         (df['ciudad'] == ciudad) &
@@ -120,13 +124,8 @@ async def consulta(mensaje: str = Query(...)):
 
     mensaje_dataset = f"{count} usuarios reportaron problemas en la {categoria} de {ciudad.capitalize()}."
 
-    # Generar mensaje con Gemini usando el texto del usuario
-    mensaje_gemini = generar_respuesta_gemini(mensaje)
-
-    print("Mensaje recibido:", mensaje)
-    print("Texto normalizado:", texto)
-    print("Ciudad detectada:", ciudad)
-    print("Categoría detectada:", categoria)
+    # Llamada segura a Gemini
+    mensaje_gemini = generar_respuesta_gemini(texto)
 
     return {
         "mensaje_dataset": mensaje_dataset,

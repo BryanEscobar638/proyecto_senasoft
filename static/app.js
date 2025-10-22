@@ -11,47 +11,39 @@ document.getElementById("consultar").addEventListener("click", async () => {
     return;
   }
 
-  // Crear burbuja del usuario (alineada a la derecha)
+  // Burbuja del usuario
   const userWrapper = document.createElement("div");
   userWrapper.classList.add("d-flex", "justify-content-end", "mb-2");
 
   const userMsg = document.createElement("div");
-  userMsg.classList.add(
-    "p-2",
-    "bg-primary",
-    "text-white",
-    "rounded-3",
-    "shadow-sm"
-  );
+  userMsg.classList.add("p-2", "bg-primary", "text-white", "rounded-3", "shadow-sm");
   userMsg.textContent = input;
 
   userWrapper.appendChild(userMsg);
   chatBody.appendChild(userWrapper);
 
-  // Limpiar el input
+  // Limpiar input
   document.getElementById("mensaje").value = "";
-
-  // Desplazar hacia abajo automáticamente
   chatBody.scrollTop = chatBody.scrollHeight;
 
   try {
-    // Llamar al backend FastAPI
+    // Llamada al backend que generará la respuesta con Gemini
     const res = await fetch(`/consulta?mensaje=${encodeURIComponent(input)}`);
-
-    if (!res.ok) {
-      throw new Error(`Error del servidor (${res.status})`);
-    }
-
+    if (!res.ok) throw new Error(`Error del servidor (${res.status})`);
     const data = await res.json();
 
-    // Crear burbuja del bot (alineada a la izquierda)
+    // Burbuja del bot
     const botWrapper = document.createElement("div");
     botWrapper.classList.add("d-flex", "justify-content-start", "mb-2");
 
     const botMsg = document.createElement("div");
     botMsg.classList.add("p-2", "bg-light", "border", "rounded-3", "shadow-sm");
 
-    if (data.mensaje) {
+    if (data.gemini) {
+      // Si el backend devuelve la respuesta generada por Gemini
+      botMsg.textContent = data.gemini;
+    } else if (data.mensaje) {
+      // Si solo devuelve mensaje de dataset
       botMsg.textContent = data.mensaje;
     } else if (data.error) {
       botMsg.classList.replace("bg-light", "bg-warning");
@@ -63,20 +55,14 @@ document.getElementById("consultar").addEventListener("click", async () => {
     botWrapper.appendChild(botMsg);
     chatBody.appendChild(botWrapper);
     chatBody.scrollTop = chatBody.scrollHeight;
+
   } catch (error) {
     console.error("Error en la conexión:", error);
-
     const errorWrapper = document.createElement("div");
     errorWrapper.classList.add("d-flex", "justify-content-start", "mb-2");
 
     const errorMsg = document.createElement("div");
-    errorMsg.classList.add(
-      "p-2",
-      "bg-danger",
-      "text-white",
-      "rounded-3",
-      "shadow-sm"
-    );
+    errorMsg.classList.add("p-2", "bg-danger", "text-white", "rounded-3", "shadow-sm");
     errorMsg.textContent = "❌ Error al conectar con el servidor.";
 
     errorWrapper.appendChild(errorMsg);
