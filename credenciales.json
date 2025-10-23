@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ambient-climate-475914-i0",
+  "private_key_id": "dca5d66cb0d4e073bc7eb6d610c0de8b8fe2edc8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC4LhGL56TLH70E\n72TuFjxbFrQ5B92sO2vBVwr8pNWzb0UQYWMIDJW+m6heP2E1JL2uFCYumQB0fXGW\np3EzOZvIGqUHX+fMwLxPo/4ef2CUx1iLgMnqZCYUBVZ+1R32KASdy4rF6+xHYT0+\n4JF4kc3cklmyPQ+Xm+zE7VYZv0LTZ/gT2bofAB4D1w/q+36hzdAv2YFnC/ZJZxmX\ncEtcyO81CCNH36F8pjAQtbpJNZo7fQnDNgDxvGEEGjXS07mA6+hw1YB4YjEWFPbA\nzI5eObbq1c8J3SVZvrXNNNQkSbrwiTaptcfPfHJVAwzQacAh3/F2Lj7NS78d6Uxp\nouDIKO+xAgMBAAECggEALmMb9DqhXK9fsfCBYR2kkeSD+6EpiYlluEot8DerwweR\nQ3DjulFBHcKigyo/V10rkL5uZ2oNnUlC5IjDj/1AaQOc8OCMxxr70qshA5ldP9t9\nR5VmRWx30q8Ne+A9LZQipYNwLi0fU1MAU+fHe7BtQtJxWNzcInkZBvgnqVBsikXF\nr6ixY1j9VPG7x37jR7wC0Tui4WE/cAUzNKj7YzZIwZAnt1C6omRpCwPjJbZuEIyB\n1Rn7ezwFH6a3PSypTjMbHrHutIXEKw31yOS+fXoM6uEGE0loUjX5ynMgiTyqGMd8\nZUBpoMNueByjg95w7NoPpDtLuoSaqCtmXZqmopC3KQKBgQDnrLXaIQs53kfzZE4k\n2ffp0Wh+cDPvQgGSSDuOubAeNn1zLip+hA3kZfBijMI/ulAepNSstXXLgOrNLjD1\njFNwPWzlgZgKl7TlGkrKjc536snBmpZsSvYlp517o/UwJi93TJPYAriWlz1e9phN\nHP11iOAc9YhoCNXxga3IPd0EJwKBgQDLhLn1tGeWyUq7+c82IU4u30GkzkTcS8id\nhWyh5UvvrKsdK+io9LOJ/kJ4j3rFQcOCh1IHEoA2OiNMK1pcDzQaP024nHR3EX8b\nIQYaAzg+pQHVGWxytmfYgfOcrOq/IM6b5cozhvSxt7TPf6WDmB3gu/htYIVQnk2J\n2nLH/vgcZwKBgFaP4paw+AfUNOANH2GHi6jylG+BrvX7nKiykoY+fT6cr3zkx/3j\ni2lGaW35F+9Fxv/cKJaramryLUkitCpbFyX93X1XUZ7Llkxv6XgLShTmRiIvh3rI\n+3WQTjhPR6KI8f1KQIdaZOvncIfV7YwKg+1xigNn/mKYwo9tG6iQ7M7LAoGAdY+g\n3+arI/X43qbJ5GnOwNKkF7AzJNH9+8gT3V0XxUYHvh0cE2TuxRqDiSLQd1uqtR63\n6m/sceaZdylf0+fQYA0LN0XhHNqVgrVL0gDkH4OvkEpUU9s8F1vRvkJAg9FOp81Q\nRP2DIZmNr4L7uA1JzQSn136247/d6HCwdwi4h6cCgYAt2nw0BPckyd/856tHjRNS\nuEwXZV6ffsa/hPHRw4HNOMwKl5xrBh0HvIHQRymJxu31ZseujfLZRiLfrO04grot\nMaLn9L1BhPfqzihRQmPZAmxaQJwZvw4pG3qeLaJJxBMDPBttQfOGKQOV+xMTXsWo\nOfBfOjPMfT7p6rk9ledTzA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "senasoft@ambient-climate-475914-i0.iam.gserviceaccount.com",
+  "client_id": "102103266636807266694",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/senasoft%40ambient-climate-475914-i0.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

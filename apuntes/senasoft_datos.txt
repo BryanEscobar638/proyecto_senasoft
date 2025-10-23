@@ -107,3 +107,5 @@ API PRUEBA:
 
 enfoque en uso de IA y enfoque en practicas de metodologías agiles
 enfocar como llegamos a la solución, mostramos que hace
+
+en base a este codigo necesito que me generes un html con bootstrap y el codigo js necesito que el front sea un estilo chatbot donde tenga dos vistas (dos paginas) una vista principal que sea un chatbot donde primero en vez de tener un input de texto tenga un input cara cargar el CSV que es el que cargada desde python y ahi si se habilite el input de texto para hablar con el bot, y otra vista aparte donde se muestre todo el analisis en texto del csv.
