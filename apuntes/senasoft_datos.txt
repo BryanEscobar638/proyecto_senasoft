@@ -102,4 +102,10 @@ en base a este codigo generame con fast api que lo pueda consumir con JS tiene q
 
 API PRUEBA:
 	id cliente: 1018508563205-mg51enk05furlflctnt8c0adtj2s137s.apps.googleusercontent.com
-	secreto cliente: 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
+	secreto cliente: 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	
+
+
+enfoque en uso de IA y enfoque en practicas de metodologías agiles
+enfocar como llegamos a la solución, mostramos que hace
+
+en base a este codigo necesito que me generes un html con bootstrap y el codigo js necesito que el front sea un estilo chatbot donde tenga dos vistas (dos paginas) una vista principal que sea un chatbot donde primero en vez de tener un input de texto tenga un input cara cargar el CSV que es el que cargada desde python y ahi si se habilite el input de texto para hablar con el bot, y otra vista aparte donde se muestre todo el analisis en texto del csv.

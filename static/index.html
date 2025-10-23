@@ -7,72 +7,43 @@
     <title>ChatBot - Consulta de Reportes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .chat-card {
-            width: 100%;
-            max-width: 400px;
-            height: 600px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (min-width: 992px) {
-            body {
-                justify-content: flex-start;
-                align-items: stretch;
-            }
-
-            .chat-card {
-                max-width: none;
-                width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                box-shadow: none;
-            }
-
-            .card-body {
-                flex: 1;
-                overflow-y: auto;
-            }
-        }
-
         /* Estilo para menú desplegable */
         .dropdown-menu {
             min-width: 150px;
         }
+        
+        @media (min-width: 992px) {
+            .sidebar-width {
+                width: 280px;
+                flex-shrink: 0;
+            }
+        }
 
-        /* Modo oscuro */
         /* Modo oscuro */
         body.dark-mode {
             background-color: #121212 !important;
+            color: #f8f9fa;
         }
 
-        body.dark-mode .chat-card {
-            background-color: #1e1e1e;
-            border-color: #333333;
-        }
-
-        body.dark-mode .card-header {
+        body.dark-mode .card-header,
+        body.dark-mode .navbar {
             background-color: #333333 !important;
             color: #ffffff !important;
         }
 
         body.dark-mode .card-body {
             background-color: #2c2c2c !important;
-            /* fondo del chat */
         }
 
         body.dark-mode .card-footer {
             background-color: #1e1e1e !important;
+            border-top-color: #333 !important;
+        }
+        
+        body.dark-mode .sidebar-bg {
+             background-color: #1e1e1e !important;
+             border-right-color: #333 !important;
+             color: #f8f9fa;
         }
 
         body.dark-mode .form-control {
@@ -92,64 +63,158 @@
             color: #ffffff !important;
         }
 
-        /* Burbujas del bot en modo oscuro */
         body.dark-mode .bot-msg {
             background-color: #e0e0e0 !important;
-            /* gris claro */
             color: #000000 !important;
-            /* texto negro */
         }
 
-        /* Burbujas del usuario en modo oscuro */
         body.dark-mode .user-msg {
             background-color: #0d6efd !important;
-            /* azul */
             color: #ffffff !important;
         }
     </style>
 </head>
 
-<body>
+<body class="d-flex flex-column vh-100">
 
-    <div class="card shadow-lg border-0 rounded-4 chat-card">
-        <!-- Encabezado con menú -->
-        <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
-            🤖 ChatBot de Reportes Ciudadanos
+    <!-- 1. HEADER (SOLO PARA MÓVIL) -->
+    <header class="navbar bg-primary text-white p-2 d-lg-none shadow-sm">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-light btn-sm me-2" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                ☰
+            </button>
+            <span class="navbar-brand text-white mb-0 h1">SenaSoft Comunity IA</span>
+        </div>
 
-            <!-- Menú desplegable -->
-            <div class="dropdown">
-                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="configMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    ⚙️
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configMenuButton">
-                    <li><a class="dropdown-item" href="#" id="modoOscuro">Modo oscuro</a></li>
-                    <li><a class="dropdown-item" href="#" id="limpiarChat">Limpiar chat</a></li>
-                </ul>
+        <!-- Menú de Configuración (para móvil) -->
+        <div class="dropdown">
+            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="configMenuButtonMobile"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                ⚙️
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configMenuButtonMobile" id="configMenuMobile">
+                <li><a class="dropdown-item" href="#" id="modoOscuroMobile">Modo oscuro</a></li>
+                <li><a class="dropdown-item" href="#" id="limpiarChatMobile">Limpiar chat</a></li>
+                <li><hr class="dropdown-divider" id="csvDividerMobile" style="display: none;"></li>
+                <li>
+                    <a class="dropdown-item" href="#" id="cambiarArchivoMobile" style="display: none;">
+                        Cargado: <span class="badge bg-secondary" id="nombreArchivoCargadoMobile"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 2. CONTENEDOR PRINCIPAL (SIDEBAR + CHAT) -->
+    <div class="d-flex flex-grow-1 overflow-hidden">
+
+        <!-- 2a. SIDEBAR (MENÚ LATERAL) -->
+        <div class="offcanvas-lg offcanvas-start bg-light border-end sidebar-width sidebar-bg" tabindex="-1"
+             id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            
+            <!-- Encabezado del Offcanvas (solo visible en móvil) -->
+            <div class="offcanvas-header d-lg-none">
+                <h5 class="offcanvas-title" id="sidebarMenuLabel">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Cuerpo del Menú -->
+            <div class="offcanvas-body d-flex flex-column">
+                <!-- Botones de acción -->
+                <div class="d-grid gap-2 my-3">
+                    <button class="btn btn-primary" id="generarInformePDFSidebar">📄 Generar informe PDF</button>
+                    <button class="btn btn-secondary" id="vistaInformesSidebar">📊 Vista de informes graficados</button>
+                </div>
+
+                <!-- Historial de chats quemados -->
+                <div class="mt-4">
+                    <h6 class="text-muted">Historial de chats</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-1">👤 Usuario: ¿Cuál es la situación de salud en Pereira?</li>
+                        <li class="list-group-item py-1">🤖 Bot: Incremento en enfermedades crónicas no transmisibles.</li>
+                        <li class="list-group-item py-1">👤 Usuario: Genera un resumen ejecutivo de seguridad</li>
+                        <li class="list-group-item py-1">🤖 Bot: Informe generado: mejora del 15% en seguridad.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Cuerpo del chat -->
-        <div class="card-body d-flex flex-column bg-body-tertiary p-3 overflow-auto" id="chatBody">
-            <div class="alert alert-secondary p-2 mb-2">
-                ¡Hola! 👋 Soy tu asistente virtual.
-                Pregunta por la situación de una ciudad y categoría, por ejemplo:
-                <br><b>"¿Cómo está la seguridad en Pereira?"</b>
-            </div>
-        </div>
+        <!-- 2b. CONTENIDO PRINCIPAL (CHAT) -->
+        <main class="d-flex flex-column flex-grow-1" style="min-width: 0;">
 
-        <!-- Pie del chat -->
-        <div class="card-footer bg-light border-top p-3">
-            <div class="input-group">
-                <input type="text" id="mensaje" class="form-control" placeholder="Escribe tu mensaje aquí..."
-                    aria-label="Mensaje del usuario" />
-                <button class="btn btn-primary" id="consultar">Enviar</button>
+            <!-- Encabezado del Chat (SOLO PARA PC) -->
+            <div class="card-header text-white bg-primary d-none d-lg-flex justify-content-between align-items-center flex-shrink-0">
+                🤖 SenaSoft Comunity IA 🤖
+
+                <!-- Menú de Configuración (para PC) -->
+                <div class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="configMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        ⚙️
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configMenuButton" id="configMenu">
+                        <li><a class="dropdown-item" href="#" id="modoOscuro">Modo oscuro</a></li>
+                        <li><a class="dropdown-item" href="#" id="limpiarChat">Limpiar chat</a></li>
+                        <li>
+                            <hr class="dropdown-divider" id="csvDivider" style="display: none;">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" id="cambiarArchivo" style="display: none;">
+                                Cargado: <span class="badge bg-secondary" id="nombreArchivoCargado"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cuerpo del Chat (Scrollable) -->
+            <div class="card-body d-flex flex-column bg-body-tertiary p-3 overflow-auto" id="chatBody">
+                <div class="alert alert-secondary p-2 mb-2">
+                    ¡Hola! 👋 Soy tu asistente virtual.
+                    Pregunta por la situación de una ciudad y categoría, por ejemplo:
+                    <br><b>"¿Cómo está la seguridad en Pereira?"</b>
+                </div>
+            </div>
+
+            <!-- Pie del Chat (Input) -->
+            <div class="card-footer bg-light border-top p-3 flex-shrink-0">
+                <div class="mb-2" id="csvUploadContainer">
+                    <input type="file" id="csvFile" class="form-control" accept=".csv" />
+                    <button class="btn btn-success mt-2 w-100" id="cargarCSV">Cargar CSV</button>
+                </div>
+
+                <div class="input-group mt-2">
+                    <input type="text" id="mensaje" class="form-control" placeholder="Escribe tu mensaje aquí..."
+                        aria-label="Mensaje del usuario" disabled />
+                    <button class="btn btn-primary" id="consultar" disabled>Enviar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de notificación -->
+    <div class="modal fade" id="modalNotificacion" tabindex="-1" aria-labelledby="modalNotificacionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNotificacionLabel">Notificación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Mensaje dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,32 @@
+{
+  "total_registros": 10000,
+  "por_ciudad": {
+    "conteo": {
+      "Bogotá": 1023,
+      "Manizales": 1013,
+      "Medellín": 1010,
+      "Santa Marta": 989,
+      "Cartagena": 985,
+      "Bucaramanga": 985,
+      "Pereira": 983,
+      "Cali": 967,
+      "Cúcuta": 966,
+      "Barranquilla": 943,
+      "": 136
+    },
+    "porcentaje": {
+      "Bogotá": 10.23,
+      "Manizales": 10.13,
+      "Medellín": 10.1,
+      "Santa Marta": 9.89,
+      "Cartagena": 9.85,
+      "Bucaramanga": 9.85,
+      "Pereira": 9.83,
+      "Cali": 9.67,
+      "Cúcuta": 9.66,
+      "Barranquilla": 9.43,
+      "": 1.36
+    }
+  },
+  "resumen_textual": []
+}
